@@ -1,5 +1,6 @@
 import { FC, useState } from 'react';
-import { Task, useTasks, useTasksDispatch } from '@/context/TaskContext.tsx';
+import { useTasks, useTasksDispatch } from '@/E1/context/TaskContext.tsx';
+import { Task } from '@/common';
 
 const TaskList: FC = () => {
   const tasks = useTasks();
@@ -40,10 +41,7 @@ const Task: FC<TaskInfo> = (props: TaskInfo) => {
           onChange={(e) => {
             dispatch({
               type: 'changed',
-              task: {
-                ...task,
-                text: e.target.value,
-              },
+              payload: { ...task, text: e.target.value },
             });
           }}
         />
@@ -66,7 +64,7 @@ const Task: FC<TaskInfo> = (props: TaskInfo) => {
         onChange={(e) => {
           dispatch({
             type: 'changed',
-            task: {
+            payload: {
               ...task,
               done: e.target.checked,
             },
@@ -76,7 +74,7 @@ const Task: FC<TaskInfo> = (props: TaskInfo) => {
       {taskContent}
       <button
         onClick={() => {
-          dispatch({ type: 'deleted', task: { ...task, id: task.id } });
+          dispatch({ type: 'deleted', payload: { ...task, id: task.id } });
         }}
       >
         deleted

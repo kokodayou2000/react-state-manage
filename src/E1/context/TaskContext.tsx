@@ -1,8 +1,11 @@
 import { createContext, ReactNode, useContext, useReducer } from 'react';
+import { ActionType, Task } from '@/common';
 
 const TasksContext = createContext([] as unknown as Task[]);
 
-const TasksDispatchContext = createContext({} as React.Dispatch<Action>);
+const TasksDispatchContext = createContext(
+  {} as React.Dispatch<ActionType<Task>>,
+);
 
 export const TaskProvider = ({ children }: { children: ReactNode }) => {
   const [tasks, dispatch] = useReducer(taskReducer, initialTask);
@@ -22,45 +25,34 @@ export function useTasksDispatch() {
   return useContext(TasksDispatchContext);
 }
 
-export interface Task {
-  id: number;
-  text?: string;
-  done?: boolean;
-}
-export interface Action {
-  task: Task;
-  type: ActionType;
-}
-type ActionType = 'add' | 'changed' | 'deleted';
-
 const initialTask = [
   { id: 0, text: '0', done: true },
   { id: 1, text: '1', done: true },
   { id: 2, text: '2', done: false },
 ] as Task[];
 
-function taskReducer(tasks: Task[], action: Action) {
+function taskReducer(tasks: Task[], action: ActionType<Task>) {
   if (action.type === 'add') {
     {
       return [
         ...tasks,
         {
-          id: action.task.id,
-          text: action.task.text,
-          done: action.task.done,
+          id: action.payload.id,
+          text: action.payload.text,
+          done: action.payload.done,
         },
       ];
     }
   } else if (action.type === 'changed') {
     return tasks.map((task) => {
-      if (task.id === action.task.id) {
-        return action.task;
+      if (task.id === action.payload.id) {
+        return action.payload;
       } else {
         return task;
       }
     });
   } else if (action.type === 'deleted') {
-    return tasks.filter((task) => task.id !== action.task.id);
+    return tasks.filter((task) => task.id !== action.payload.id);
   } else {
     {
       throw new Error(`Unknown action type: ${action.type}`);

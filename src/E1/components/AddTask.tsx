@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
-import { useTasksDispatch } from '@/context/TaskContext.tsx';
+import { useTasksDispatch } from '@/E1/context/TaskContext.tsx';
+import { Task } from '@/common';
 
 let nextId = 3;
 
@@ -16,13 +17,10 @@ const AddTask: FC = () => {
       <button
         onClick={() => {
           setText('');
+          const newTask = { id: nextId++, text: text, done: false } as Task;
           dispatch({
             type: 'add',
-            task: {
-              id: nextId++,
-              text: text,
-              done: false,
-            },
+            payload: newTask,
           });
         }}
       >
