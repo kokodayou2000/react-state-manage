@@ -1,12 +1,11 @@
 import React, { FC } from 'react';
+import { useTasksDispatch } from '@/context/TaskContext.tsx';
 
-interface AddTaskProps {
-  onAddTask?: (text: string) => void;
-}
+let nextId = 3;
 
-const AddTask: FC<AddTaskProps> = (props: AddTaskProps) => {
+const AddTask: FC = () => {
   const [text, setText] = React.useState<string>('');
-  const { onAddTask } = props;
+  const dispatch = useTasksDispatch();
   return (
     <>
       <input
@@ -17,7 +16,14 @@ const AddTask: FC<AddTaskProps> = (props: AddTaskProps) => {
       <button
         onClick={() => {
           setText('');
-          onAddTask?.(text);
+          dispatch({
+            type: 'add',
+            task: {
+              id: nextId++,
+              text: text,
+              done: false,
+            },
+          });
         }}
       >
         Add task
