@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 
 import store from '@/E2/store';
 import { ReduxTaskList } from '@/E2/components/ReduxTaskList.tsx';
+import { Demo } from "@/E3/Timer.tsx";
 
 const App = () => {
   return (
@@ -22,6 +23,10 @@ const App = () => {
           <Provider store={store}>
             <ReduxTaskList />
           </Provider>
+        </div>
+        <div className="border">
+          <div>mobx</div>
+          <Demo />
         </div>
       </div>
     </>
