@@ -3,9 +3,12 @@ import AddTask from '@/E1/components/AddTask.tsx';
 import { TaskProvider } from '@/E1/context/TaskContext.tsx';
 import { Provider } from 'react-redux';
 
-import store from '@/E2/store';
 import { ReduxTaskList } from '@/E2/components/ReduxTaskList.tsx';
-import { Demo } from "@/E3/Timer.tsx";
+import { Demo } from '@/E3/timer/Timer.tsx';
+import TodoList from '@/E3/todo/TodoList.tsx';
+
+import store from '@/E2/store';
+import store1 from '@/E3/todo/store.ts';
 
 const App = () => {
   return (
@@ -25,8 +28,12 @@ const App = () => {
           </Provider>
         </div>
         <div className="border">
-          <div>mobx</div>
+          <div>mobx timer</div>
           <Demo />
+        </div>
+        <div className="border">
+          <div>mobx todolist</div>
+          <TodoList store={store1} />
         </div>
       </div>
     </>
